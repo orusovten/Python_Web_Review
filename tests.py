@@ -43,8 +43,8 @@ def test_decode_4():
 
 
 def test_decode_5():
-    assert do_operation("""_sw*yqkFdTe:(HCs*nubvx2i"[Vdt~fLn""", "decode", "vigenere", "Het*arcneh1#%") ==
-    "Today is Monday and it`s so awful"
+    assert do_operation("""_sw*yqkFdTe:(HCs*nubvx2i"[Vdt~fLn""", "decode", "vigenere", "Het*arcneh1#%") ==\
+                "Today is Monday and it`s so awful"
 
 
 def test_decode_6():
