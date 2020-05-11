@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <body>
+        <a href="{{ url_for('about') }}">About</a>
+        <p>{{errors}}</p>
+        <form method="post" action="." id="input_data">
+            <p>Enter a text:
+              <input name="text" /></p>
+            <p>Choose an operation:
+              <select id="operation_id" name="operation">
+                <option value="caesar_break">caesar_break</option>
+                <option value="encode">encode</option>
+                <option value="decode">decode</option>
+               </select>
+            <br>Choose a cipher:
+                <select id="cipher_id" name="cipher" disabled>
+                </select>
+            <br>Enter a key:
+                <input name="key" disabled />
+            </p>
+            <p><input type="submit" value="Do operation" /></p>
+        </form>
+    </body>
+
+    <script>
+      var all_ciphers = ["caesar", "vigenere"];
+      operation_id.onchange = function(){
+        cipher_id.disabled = false;
+        cipher_id.innerHTML = ""
+        my_operation = this.value;
+        if(my_operation != "caesar_break"){
+            for(var i = 0; i < all_ciphers.length; i++){
+                cipher_id.innerHTML+='<option value="'+all_ciphers[i]+'">'+all_ciphers[i]+'</option>';
+            }
+            input_data.key.disabled = false;
+        }else{
+            cipher_id.disabled = true;
+            input_data.key.disabled = true;
+        }
+      }
+    </script>
+</html>
