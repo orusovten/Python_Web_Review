@@ -15,8 +15,7 @@ def adder_page():
         cipher = request.form.get("cipher")
         key = request.form.get("key")
         errors += find_errors_in_text(text)
-        else:
-            errors += find_errors_in_operation(operation, cipher, key)
+        errors += find_errors_in_operation(operation, cipher, key)
         if errors == "":
             result = do_operation(text, operation, cipher, key)
             return render_template("result.html", result=result)
