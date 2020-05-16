@@ -9,7 +9,6 @@ ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'docx'])
 
 
 app = Flask(__name__)
-app.config["DEBUG"] = True
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
@@ -20,7 +19,7 @@ def allowed_file(filename):
 
 @app.route("/<filename>")
 def uploaded_file(filename):
-    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+    return send_from_directory(app.config['UPLOAD_FOLDER'], filename, as_attachment=True)
 
 
 @app.route("/", methods=["GET", "POST"])
@@ -36,7 +35,6 @@ def adder_page():
                 file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
                 with open(UPLOAD_FOLDER + "/" + filename, "r") as text_file:
                     text = text_file.read()
-                    isFileSelected = True
         except Exception:
             text = request.form.get("text")
         operation = request.form.get("operation")
