@@ -3,9 +3,18 @@
     <body>
         <a href="{{ url_for('about') }}">About</a>
         <p>{{errors}}</p>
-        <form method="post" action="." id="input_data">
+        <form method="post" action="." id="input_data" enctype="multipart/form-data">
+            <p>Select what you need to do:
+              <select id="input_type_id" name="input_type">
+                <option value="input_file">Input a file</option>
+                <option value="enter_text">Enter a text</option>
+              </select>
+            </p>
+            <p>Select the file you want to process:</p>
+            <p><input type="file" name="file" id="input_file_id"></p>
             <p>Enter a text:
-              <input name="text" /></p>
+              <input name="text" id="text_id" disabled>
+            </p>
             <p>Choose an operation:
               <select id="operation_id" name="operation">
                 <option value="caesar_break">caesar_break</option>
@@ -23,17 +32,31 @@
     </body>
 
     <script>
+      input_type_id.onchange = function(){
+        my_input_type = this.value;
+        if(my_input_type == "input_file"){
+          input_file_id.disabled = false;
+          text_id.disabled = true;
+        }
+        else{
+          text_id.disabled = false;
+          var my_input_file = document.getElementById("input_file_id");
+          my_input_file.setAttribute("disabled", "disabled");
+        }
+      }
+
       var all_ciphers = ["caesar", "vigenere"];
       operation_id.onchange = function(){
         cipher_id.disabled = false;
-        cipher_id.innerHTML = ""
+        cipher_id.innerHTML = "";
         my_operation = this.value;
         if(my_operation != "caesar_break"){
             for(var i = 0; i < all_ciphers.length; i++){
                 cipher_id.innerHTML+='<option value="'+all_ciphers[i]+'">'+all_ciphers[i]+'</option>';
             }
             input_data.key.disabled = false;
-        }else{
+        }
+        else{
             cipher_id.disabled = true;
             input_data.key.disabled = true;
         }
