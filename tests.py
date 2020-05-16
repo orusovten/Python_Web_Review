@@ -54,9 +54,9 @@ def test_caesar_break():
     with open("text_for_testing_caesar_break.txt", "r") as file:
         text = file.read()
         keys = [1, 100, 20]
-        ciphered_texts = [do_operation(text, "encode", "caesar", key) for key in keys]
-        for ciphered_text in ciphered_texts:
-            assert text == do_operation(text, "caesar_break")
+        for key in keys:
+            ciphered_text = do_operation(text, "encode", "caesar", key)
+            assert text == do_operation(ciphered_text, "caesar_break")
 
 
 def test_find_errors_in_text():
