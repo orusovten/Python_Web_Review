@@ -4,12 +4,12 @@ from werkzeug.utils import secure_filename
 from encode_engine import do_operation, find_errors_in_text, find_errors_in_operation
 
 
-UPLOAD_FOLDER = """./uploads"""
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'docx'])
 
 
 app = Flask(__name__)
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config["DEBUG"] = True
+app.config['UPLOAD_FOLDER'] = """./uploads"""
 
 
 def allowed_file(filename):
@@ -25,7 +25,6 @@ def uploaded_file(filename):
 @app.route("/", methods=["GET", "POST"])
 def adder_page():
     errors = ""
-    isFileSelected = False
     if request.method == "POST":
         file = None
         try:
@@ -33,7 +32,7 @@ def adder_page():
             if file and allowed_file(file.filename):
                 filename = secure_filename(file.filename)
                 file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-                with open(UPLOAD_FOLDER + "/" + filename, "r") as text_file:
+                with open(app.config['UPLOAD_FOLDER'] + "/" + filename, "r") as text_file:
                     text = text_file.read()
         except Exception:
             text = request.form.get("text")
@@ -46,12 +45,12 @@ def adder_page():
             result = do_operation(text, operation, cipher, key)
             if file is not None:
                 out_filename = "result." + filename.rsplit('.', 1)[1]
-                with open(UPLOAD_FOLDER + "/" + out_filename, "w") as out_file:
+                with open(app.config['UPLOAD_FOLDER'] + "/" + out_filename, "w") as out_file:
                     out_file.write(result)
                 return redirect(url_for("uploaded_file", filename=out_filename))
             else:
                 return render_template("result.html", result=result)
-    return render_template("home.html", errors=errors, isFileSelected="aaa")
+    return render_template("home.html", errors=errors)
 
 
 @app.route("/about")
