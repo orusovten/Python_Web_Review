@@ -4,7 +4,7 @@ from werkzeug.utils import secure_filename
 from encode_engine import do_operation, find_errors_in_text, find_errors_in_operation
 
 
-UPLOAD_FOLDER = """C:/Users/Тенгис/Python/Reviews/Review2"""
+UPLOAD_FOLDER = """./uploads"""
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'docx'])
 
 
